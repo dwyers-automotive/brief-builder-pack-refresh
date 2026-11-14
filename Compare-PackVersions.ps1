@@ -7,13 +7,17 @@
       every other file : changed yes/no + old/new line counts (files missing on either side are listed)
 
     Writes a Markdown summary to -OutPath and returns the result object.
+    Folder-to-folder. Invoke-PackRefresh.ps1 exports the pack repo's HEAD to a temp folder as -OldPath
+    and passes the working tree as -NewPath.
     ASCII only. Windows PowerShell 5.1. Riley, 14/11/2026.
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)][string] $OldPath,
     [Parameter(Mandatory)][string] $NewPath,
-    [Parameter(Mandatory)][string] $OutPath
+    [Parameter(Mandatory)][string] $OutPath,
+    [string] $OldLabel,   # how the summary names each side, e.g. 'HEAD 7cb33a5' / 'working tree'
+    [string] $NewLabel
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -111,7 +115,9 @@ $sb = New-Object System.Text.StringBuilder
 function Out-Line { param([string]$s = '') [void]$sb.AppendLine($s) }
 Out-Line '# Brief Builder Knowledge Pack - change summary'
 Out-Line ''
-Out-Line "Generated $($result.Generated). Previous: ``$(Split-Path -Leaf $OldPath)`` -> new: ``$(Split-Path -Leaf $NewPath)``."
+if (-not $OldLabel) { $OldLabel = Split-Path -Leaf $OldPath }
+if (-not $NewLabel) { $NewLabel = Split-Path -Leaf $NewPath }
+Out-Line "Generated $($result.Generated). Previous: ``$OldLabel`` -> new: ``$NewLabel``."
 Out-Line ''
 if (-not $result.HasChanges) { Out-Line '**No changes** - the two versions are identical.'; Out-Line '' }
 Out-Line "## 04 Project Index ($($result.ProjectRowsOld) -> $($result.ProjectRowsNew) rows)"
