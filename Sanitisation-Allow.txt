@@ -1,0 +1,27 @@
+# Sanitisation-Allow.txt - known-safe entries for Test-PackSanitisation.ps1. Keep this minimal.
+#   host: <name>   a URL or bare host that is exactly <name> (or www.<name>) is allowed.
+#   anything else  an exact phrase known to be safe; a hit wholly inside it is ignored.
+# Never add internal hosts (msappproxy.net, sharepoint.com, *.local, server names) or anything with a name in it.
+
+# Public group and brand websites
+host: dwyers.com.au
+host: dwyerstoyota.com.au
+host: dwyersram.com.au
+host: gippslandram.com.au
+host: bairnsdalemg.com.au
+host: bairnsdalemazda.com.au
+host: bairnsdalehyundai.com.au
+host: rivierapanels.com.au
+
+# The pack's own destination
+host: claude.ai
+
+# Product names that look like host names
+ASP.NET
+
+# Prose that names a secret-type word without holding one (v2, 14/11/2026)
+credentials, keys, tokens
+no secrets in repos
+Secrets Management & Script Protection
+Move secrets to a managed vault
+design tokens

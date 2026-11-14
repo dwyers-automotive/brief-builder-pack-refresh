@@ -1,0 +1,8 @@
+# Holds names of people in HR / customer / personal matters - never commit.
+Sanitisation-Exclusions.txt
+Sanitisation-Exclusions*.txt
+
+# Run output and logs
+*.log
+sanitisation_report*.txt
+change_summary*.md
